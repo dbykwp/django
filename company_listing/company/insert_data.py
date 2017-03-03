@@ -1,31 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from .serializer import CompanySerializer, EmployeeSerializer
-from rest_framework.views import APIView
-from .models import Company, Employee
-from rest_framework import status
-from rest_framework.response import Response
-#from django.views.decorators.csrf import csrf_token
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-# Create your views here.
-import csv
-import MySQLdb
-from datetime import datetime
+# this is dummy/psedo code to insert data into Company table
 
-class CompanyList(APIView):
 
-    def get(self, request):
-        company = Company.objects.all()
-        data = CompanySerializer(company, many=True).data
-        return Response(data)
-
-class CompanyDetails(APIView):
-
-    def get(self, request, cid):
-        company = Company.objects.get(pk=cid)
-        data = CompanySerializer(company).data
         with open('/home/dheeraj/experiments/company/company_data.csv', 'rb') as f:
             reader = csv.reader(f)
             for row in reader:
@@ -53,11 +28,4 @@ class CompanyDetails(APIView):
                 except Exception as e:
                     print row
                     print e
-        return Response(data)
 
-class EmployeeDetails(APIView):
-
-    def get(self, request, din):
-        employee = Employee.objects.get(pk=din)
-        data = EmployeeSerializer(employee).data
-        return Response(data)
